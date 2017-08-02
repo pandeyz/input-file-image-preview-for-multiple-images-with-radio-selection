@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Image Preview</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript">	
+	$(document).ready(function(){
+		var inputLocalFont = document.getElementById("image-input");
+		inputLocalFont.addEventListener("change",previewImages,false);
+
+		function previewImages(){
+			var fileList = this.files;
+
+			var anyWindow = window.URL || window.webkitURL;
+
+			// Empty the container first
+			$('.preview-area').html('');
+
+			for(var i = 0; i < fileList.length; i++){
+			var objectUrl = anyWindow.createObjectURL(fileList[i]);
+			$('.preview-area').append('<div><img width="100" height="100" src="' + objectUrl + '" /><br><input type="radio" name="default"> Default Image<div>');
+			window.URL.revokeObjectURL(fileList[i]);
+			}
+
+			// Make first radio checked
+			document.querySelectorAll('[name=default]')[0].checked = true; 
+		}
+	});
+	</script>
+</head>
+<body>
+
+	<input type="file" class="dimmy" id="image-input" multiple />
+	<div class="preview-area"></div>
+
+</body>
+	
+
+</html>
